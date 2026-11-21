@@ -1,15 +1,7 @@
-name: Validate Plugin
-
-on:
-  push:
-    branches:
-      - "**"
-  pull_request:
-
-permissions:
-  contents: read
-
-jobs:
-  validate:
-    if: github.repository != 'OneDragon-Anyone/plugin-template'
-    uses: OneDragon-Anyone/plugin-template/.github/workflows/reusable-validate.yml@master
+# 统一 LF：Windows 上 core.autocrlf=true 会把工作流改成 CRLF，Actions 解析会报错
+* text=auto eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
