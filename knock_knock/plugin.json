@@ -1,0 +1,22 @@
+{
+  "id": "knock_knock",
+  "name": "knock knock 邀约",
+  "summary": "自动在录像店打开 knock knock，逐个给代理人发邀约、走完对话二选一与时段选择，每天按配置完成邀约次数；开始前先清掉昨天遗留的过期邀约。",
+  "version": "0.1.0",
+  "versionCode": 1,
+  "author": {
+    "name": "SR",
+    "url": "https://github.com/kinggod899"
+  },
+  "homepage": "https://github.com/kinggod899/knock_knock",
+  "risk": [
+    "automation",
+    "ocr",
+    "process"
+  ],
+  "compatibility": {
+    "minAppVersion": "2.0.0",
+    "minCoreApiVersion": 1,
+    "python": ">=3.11"
+  }
+}

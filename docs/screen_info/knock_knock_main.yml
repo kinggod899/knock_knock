@@ -1,0 +1,24 @@
+screen_id: knock_knock_main
+screen_name: knock knock
+app_id: knock_knock
+pc_alt: false
+area_list:
+- area_name: 标题
+  id_mark: true
+  pc_rect:
+  - 380
+  - 130
+  - 700
+  - 200
+  text: knock knock
+  lcs_percent: 0.6
+- area_name: 按钮-关闭
+  id_mark: false
+  pc_rect:
+  - 1450
+  - 130
+  - 1600
+  - 200
+  text: ''
+  lcs_percent: 0.5
+  goto_list: []

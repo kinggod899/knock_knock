@@ -1,0 +1,41 @@
+screen_id: knock_knock_contact
+screen_name: knock knock-联系人
+app_id: knock_knock
+pc_alt: false
+area_list:
+- area_name: 剩余邀约次数
+  id_mark: true
+  pc_rect:
+  - 760
+  - 130
+  - 1100
+  - 200
+  text: 剩余邀约
+  lcs_percent: 0.6
+- area_name: 代理人名
+  id_mark: false
+  pc_rect:
+  - 900
+  - 290
+  - 1400
+  - 360
+  text: ''
+  lcs_percent: 0.5
+- area_name: 对代理人的印象
+  id_mark: false
+  pc_rect:
+  - 800
+  - 590
+  - 1400
+  - 720
+  text: 对
+  lcs_percent: 0.5
+- area_name: 按钮-邀约
+  id_mark: false
+  pc_rect:
+  - 1030
+  - 780
+  - 1210
+  - 860
+  text: 邀约
+  lcs_percent: 0.7
