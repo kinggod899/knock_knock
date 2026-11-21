@@ -1,4 +1,4 @@
-# kk约会代发
+# knock knock 邀约
 
 绝区零一条龙（ZenlessZoneZero-OneDragon）插件：代你向代理人发送约会邀请，每天三次。
 

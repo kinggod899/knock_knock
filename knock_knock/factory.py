@@ -1,4 +1,4 @@
-"""kk约会代发插件的应用工厂。"""
+"""knock knock 邀约插件的应用工厂。"""
 
 from __future__ import annotations
 
