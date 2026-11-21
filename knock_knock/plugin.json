@@ -1,11 +1,11 @@
 {
   "id": "knock_knock",
-  "name": "knock knock 邀约",
+  "name": "kk约会代发",
   "summary": "自动在录像店打开 knock knock，逐个代你向代理人发送约会邀请，走完对话二选一与时段选择，每天按配置完成邀约次数；开始前先清掉昨天遗留的过期邀约。",
-  "version": "0.1.2",
-  "versionCode": 3,
+  "version": "0.1.3",
+  "versionCode": 4,
   "author": {
-    "name": "SR",
+    "name": "kinggod899",
     "url": "https://github.com/kinggod899"
   },
   "homepage": "https://github.com/kinggod899/knock_knock",

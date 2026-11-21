@@ -1,4 +1,4 @@
-"""knock knock 邀约的设置弹窗。
+"""kk约会代发的设置弹窗。
 
 只有两项，用 FLYOUT（轻量弹窗）就够：
 - 一天尝试邀约几次（不是成功几次，见配置项说明）
@@ -23,7 +23,7 @@ from .config import KnockKnockConfig
 
 
 class KnockKnockSettingFlyout(AppSettingFlyout):
-    """knock knock 邀约的设置弹窗。"""
+    """kk约会代发的设置弹窗。"""
 
     def _setup_ui(self, layout: QVBoxLayout) -> None:
         self.attempts_opt = SpinBoxSettingCard(

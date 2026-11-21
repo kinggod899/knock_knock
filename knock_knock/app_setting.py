@@ -1,4 +1,4 @@
-"""knock knock 邀约的设置声明。
+"""kk约会代发的设置声明。
 
 框架按文件名约定（*_app_setting.py）在各插件目录里扫描这个文件，
 自动在运行卡片上挂齿轮按钮。
@@ -13,7 +13,7 @@ from . import const
 
 
 class KnockKnockAppSetting(AppSettingProvider):
-    """knock knock 邀约的设置声明。"""
+    """kk约会代发的设置声明。"""
 
     app_id: str = const.APP_ID
     setting_type: SettingType = SettingType.FLYOUT
