@@ -13,10 +13,6 @@ from .app import KnockKnockApp
 from .config import KnockKnockConfig
 
 if TYPE_CHECKING:
-    from one_dragon.base.operation.application.application_run_record import (
-        AppRunRecord,
-    )
-
     from zzz_od.context.zzz_context import ZContext
 
 
@@ -32,6 +28,6 @@ class KnockKnockAppFactory(ApplicationFactory):
     def create_config(self, instance_idx: int, group_id: str) -> ApplicationConfig:
         return KnockKnockConfig(instance_idx=instance_idx, group_id=group_id)
 
-    def create_run_record(self, instance_idx: int) -> AppRunRecord | None:
-        """游戏每天 3 次邀约是硬上限，跑完当天不用再跑，所以保留默认的每日记录。"""
-        return None
+    # 不覆写 create_run_record：游戏每天 3 次邀约是硬上限，跑完当天不用再跑。
+    # 父类在 DEFAULT_GROUP=True 时会按区服刷新时间建每日记录，一条龙据此跳过
+    # 当天已完成的应用，应用卡片也能显示「今天已运行」。

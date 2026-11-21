@@ -25,7 +25,9 @@
    - 结束界面两种：「开始邀约同行」直接点；「上午/下午/夜晚/凌晨 + 加入日程」
      要先点时段，再点「加入日程」。
 4. 完成后回联系人列表，继续下一个。
-5. 成功与否以左上「剩余邀约N/3」的 N 是否下降为准。
+5. **按流程走完即算成功**：结束界面出来了就算这次邀约做完，不管左上
+   「剩余邀约N/3」有没有下降。那个计数只在联系人页读得到，还可能读成 -1，
+   拿它当成功判据会误判；它只用来做「已经 0/3 就提前收工」的兜底。
 """
 
 from __future__ import annotations
@@ -1048,15 +1050,21 @@ class KnockKnockApp(ZApplication):
     @node_from(from_name='确认完成')
     @operation_node(name='核对完成', screenshot_before_round=False)
     def verify_done(self) -> OperationRoundResult:
-        """用「剩余邀约N/3」的 N 是否下降确认这次邀约真的生效。
+        """收尾：回联系人列表，这次邀约按「流程走完」计入成功次数。
 
-        **必须先切回联系人页再读**：「剩余邀约N/3」只出现在联系人页，在会话页
-        直接读永远是 -1（日志里那条「邀约完成（读数 -1）」就是这么来的）。
+        **成功判据是流程走完**：走到这个节点说明对话已经结束、结束界面已经点过，
+        那就算这次邀约做完，直接 `invite_done += 1`。
+
+        **不拿「剩余邀约N/3」判成功**：那个计数只在联系人页读得到，在会话页
+        直接读永远是 -1（日志里那条「邀约完成（读数 -1）」就是这么来的）。用它
+        决定加不加，会把真实完成的邀约漏掉、当天做不满次数。这里读它只为了写日志
+        和刷新 `remain_before`，读不到就只写读数。
         """
         self._back_to_contact_list()
         self._need_scroll_top = True
 
         now = self._read_remain(self.screenshot())
+        # 流程走完即计入成功，不看读数：读数只在联系人页可靠，会话页是 -1
         self.invite_done += 1
         if self.remain_before >= 0 and now >= 0:
             log.info(f'{self.current_agent} 邀约完成，剩余 {now}/3（原 {self.remain_before}）')
