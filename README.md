@@ -41,6 +41,10 @@
 
 配置存在 `config/<实例>/<分组>/knock_knock.yml`。
 
+## 通知
+
+跑完会推一条摘要：这次成功邀约了几次、一共尝试了几次、跳过了几个信赖已满的代理人；失败时还会带上结束原因。跟其他应用一样在「设置 → 通知」里控制，节点细节选「关闭」就不推、选「合并」就并入应用结束的那条消息。你手动点停止时不推。
+
 ## 跑之前要确认
 
 - 用一条龙启动器运行（它自带提权）。用非提权的 Python 直接跑，游戏不会有任何反应。
@@ -60,15 +64,18 @@ knock_knock/
 │   ├── config.py        配置项
 │   ├── app_setting.py   设置入口声明
 │   └── setting_flyout.py 设置弹窗
-├── docs/                开发文档（画面建档、交接日志）
-└── scripts/             本地校验与打包脚本
+└── docs/                开发文档（画面建档、交接日志）
 ```
 
 ## 本地校验与打包
 
+校验和打包脚本由官方的 [plugin-tools](https://github.com/OneDragon-Anyone/plugin-tools) 提供，CI 自动跑，本地想提前看一眼可以克隆到 `.plugin-tools`：
+
 ```shell
-python scripts/validate_plugin.py --strict
-python scripts/build_zip.py
+git clone --depth 1 --branch v1 https://github.com/OneDragon-Anyone/plugin-tools.git .plugin-tools
+
+python .plugin-tools/scripts/validate_plugin.py --repo . --strict
+python .plugin-tools/scripts/build_zip.py --repo .
 ```
 
 ## 许可

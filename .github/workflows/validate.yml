@@ -11,5 +11,4 @@ permissions:
 
 jobs:
   validate:
-    if: github.repository != 'OneDragon-Anyone/plugin-template'
-    uses: OneDragon-Anyone/plugin-template/.github/workflows/reusable-validate.yml@master
+    uses: OneDragon-Anyone/plugin-tools/.github/workflows/reusable-validate.yml@v1

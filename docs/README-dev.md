@@ -78,7 +78,6 @@ plugins/knock_knock/            仓库根（github.com/kinggod899/knock_knock）
 │   ├── plugin.json             插件市场元数据
 │   └── __init__.py
 ├── docs/                       开发文档（本文件、WORKLOG、画面建档）
-├── scripts/                    官方模板的校验与打包脚本
 └── README.md                   商店详情页展示的使用说明
 ```
 

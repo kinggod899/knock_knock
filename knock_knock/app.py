@@ -40,6 +40,7 @@ from typing import TYPE_CHECKING
 import cv2
 import numpy as np
 
+from one_dragon.base.config.notify_config import NotifyDetailMode
 from one_dragon.base.geometry.point import Point
 from one_dragon.base.geometry.rectangle import Rect
 from one_dragon.base.operation.application import application_const
@@ -47,6 +48,7 @@ from one_dragon.base.operation.operation_edge import node_from
 from one_dragon.base.operation.operation_node import operation_node
 from one_dragon.base.operation.operation_round_result import OperationRoundResult
 from one_dragon.utils import cv2_utils, str_utils
+from one_dragon.utils.i18_utils import gt
 from one_dragon.utils.log_utils import log
 from zzz_od.application.zzz_application import ZApplication
 from zzz_od.operation.transport import Transport
@@ -142,7 +144,62 @@ class KnockKnockApp(ZApplication):
 
     def after_operation_done(self, result: OperationResult) -> None:
         self._restore_input_mode()
+        try:
+            self._push_summary(result)
+        except Exception:
+            log.error('推送 knock knock 邀约摘要失败', exc_info=True)
         ZApplication.after_operation_done(self, result)
+
+    def _push_summary(self, result: OperationResult) -> None:
+        """任务结束后推送"今天成功邀约了几次"，按本应用的节点通知设置发送。
+
+        为什么放在这里而不是某个节点上：手动停在半路、次数用完提前收工、
+        异常中断都发生在不同节点，只有停止这一刻能拿到最终的成功次数。
+
+        规则跟框架的节点通知保持一致：
+        - 关闭：不发；
+        - 仅失败：只在任务失败时发；
+        - 合并：放进通知池，由框架在应用结束时并入合并消息；
+        - 逐条：直接推一条。
+        """
+        if self.ctx.run_context.is_context_stop:
+            return
+        if not self.ctx.notify_config.enable_notify:
+            return
+        if not self.ctx.run_context.is_app_need_notify(self.app_id):
+            return
+        mode = self.ctx.notify_config.get_app_detail_mode(self.app_id)
+        if mode == NotifyDetailMode.OFF.value.value:
+            return
+        if mode == NotifyDetailMode.ERROR_ONLY.value.value and result.success:
+            return
+
+        content = self._summary_text(result)
+        if content == '':
+            return
+        if mode == NotifyDetailMode.MERGE.value.value:
+            self.ctx.run_context.notify_pool.add(content=content)
+        else:
+            self.ctx.push_service.push_async(
+                title=self.ctx.notify_config.title,
+                content=content,
+            )
+
+    def _summary_text(self, result: OperationResult) -> str:
+        """摘要正文：成功次数是主信息，尝试次数和跳过数用来解释为什么没做满。"""
+        head = (f"{gt('任务')}「{gt(const.APP_NAME)}」"
+                f"{gt('成功邀约')} {self.invite_done}/{self.config.daily_invite_limit} {gt('次')}")
+
+        detail = (f"{gt('尝试')} {self.invite_attempts}/{self.config.max_invite_attempts} {gt('次')}，"
+                  f"{gt('信赖已满跳过')} {self.trust_full_count} {gt('个')}")
+        lines = [head, detail]
+
+        if not result.success:
+            # 停止原因常带「；」后的细节，推送只取第一段
+            reason = str(result.status).split('；')[0] if result.status else ''
+            if reason:
+                lines.append(f"{gt('结束原因')}：{reason}")
+        return '\n'.join(lines)
 
     # ─── 输入层：键鼠 ─────────────────────────────────────────
 

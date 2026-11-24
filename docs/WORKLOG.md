@@ -23,7 +23,6 @@ plugins/knock_knock/            仓库根（会推到 github.com/kinggod899/knoc
 │   ├── plugin.json             插件市场元数据
 │   └── __init__.py
 ├── docs/                       文档（本文件、开发说明、画面建档）
-├── scripts/                    本地校验与打包脚本（来自官方模板）
 └── README.md                   商店展示用的使用说明
 ```
 
